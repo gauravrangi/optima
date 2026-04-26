@@ -1,0 +1,7 @@
+{
+  "general": { "settings": "Settings" },
+  "settings_schema": {
+    "colors": { "name": "Colors" },
+    "brand": { "name": "Brand" }
+  }
+}

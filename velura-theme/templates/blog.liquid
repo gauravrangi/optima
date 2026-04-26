@@ -1,0 +1,21 @@
+<section class="science">
+  <div class="container">
+    <div class="science-head">
+      <h2>{{ blog.title }}</h2>
+    </div>
+    <div class="reviews-grid">
+      {%- for article in blog.articles -%}
+        <a class="review" href="{{ article.url }}" style="text-decoration:none">
+          {%- if article.image -%}
+            <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.title | escape }}" style="border-radius:4px;margin-bottom:16px" />
+          {%- endif -%}
+          <h4>{{ article.title }}</h4>
+          <p>{{ article.excerpt_or_content | strip_html | truncatewords: 24 }}</p>
+        </a>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <div style="margin-top:48px;text-align:center">{{ paginate | default_pagination }}</div>
+    {%- endif -%}
+  </div>
+</section>

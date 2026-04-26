@@ -1,0 +1,29 @@
+<section class="science">
+  <div class="container">
+    <div class="science-head">
+      <h2>Hi, {{ customer.first_name | default: customer.email }}.</h2>
+    </div>
+    <div class="root-cause-grid">
+      <div>
+        <h3>Recent orders</h3>
+        {%- if customer.orders.size > 0 -%}
+          <ul style="list-style:none;padding:0;margin-top:16px">
+            {%- for order in customer.orders -%}
+              <li style="padding:16px 0;border-bottom:1px solid var(--line)">
+                <a href="{{ order.customer_url }}" style="text-decoration:underline">{{ order.name }}</a> ·
+                {{ order.created_at | date: '%b %-d, %Y' }} · {{ order.total_price | money }}
+              </li>
+            {%- endfor -%}
+          </ul>
+        {%- else -%}
+          <p style="color:var(--ink-soft);margin-top:16px">No orders yet.</p>
+        {%- endif -%}
+      </div>
+      <div>
+        <h3>Account</h3>
+        <p style="margin-top:16px;color:var(--ink-soft)">{{ customer.email }}</p>
+        <p style="margin-top:16px"><a href="{{ routes.account_addresses_url }}" style="text-decoration:underline">Manage addresses</a> · <a href="{{ routes.account_logout_url }}" style="text-decoration:underline">Log out</a></p>
+      </div>
+    </div>
+  </div>
+</section>

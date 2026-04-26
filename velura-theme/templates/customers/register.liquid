@@ -1,0 +1,15 @@
+<section class="science">
+  <div class="container-narrow" style="max-width:480px">
+    <div class="science-head">
+      <h2>Create account</h2>
+    </div>
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}<div style="color:var(--accent-deep);margin-bottom:16px">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <input type="text" name="customer[first_name]" placeholder="First name" required style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;margin-bottom:12px" />
+      <input type="text" name="customer[last_name]"  placeholder="Last name"  required style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;margin-bottom:12px" />
+      <input type="email" name="customer[email]" placeholder="Email" required style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;margin-bottom:12px" />
+      <input type="password" name="customer[password]" placeholder="Password" required style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;margin-bottom:24px" />
+      <button type="submit" class="btn btn-primary" style="width:100%">Create account</button>
+    {%- endform -%}
+  </div>
+</section>

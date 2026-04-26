@@ -1,0 +1,12 @@
+<section class="science">
+  <div class="container-narrow">
+    <div class="science-head">
+      <span class="eyebrow">{{ article.published_at | date: '%B %-d, %Y' }}</span>
+      <h2>{{ article.title }}</h2>
+      {%- if article.image -%}
+        <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title | escape }}" style="margin-top:32px;border-radius:4px" />
+      {%- endif -%}
+    </div>
+    <div class="rte" style="font-size:17px;color:var(--ink-soft);line-height:1.75">{{ article.content }}</div>
+  </div>
+</section>

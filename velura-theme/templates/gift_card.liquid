@@ -1,0 +1,15 @@
+<section class="science">
+  <div class="container-narrow" style="text-align:center">
+    <div class="science-head">
+      <span class="eyebrow">Gift card</span>
+      <h2>{{ gift_card.balance | money }} balance</h2>
+      <p>Use this code at checkout.</p>
+    </div>
+    <div style="background:var(--bg-cream);padding:32px;border-radius:4px;border:1px solid var(--line);font-family:'Cormorant Garamond',serif;font-size:32px;letter-spacing:0.1em;text-align:center">
+      {{ gift_card.code | format_code }}
+    </div>
+    {%- if gift_card.enabled == false -%}
+      <p style="margin-top:16px;color:var(--accent-deep)">Expired</p>
+    {%- endif -%}
+  </div>
+</section>

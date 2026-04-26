@@ -1,0 +1,82 @@
+<section class="reviews" id="{{ section.settings.anchor | default: 'reviews' }}">
+  <div class="container">
+    <div class="reviews-head">
+      <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <div class="reviews-stats">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'stat' -%}
+            <div class="r-stat" {{ block.shopify_attributes }}>
+              <div class="num">{{ block.settings.number | escape }}</div>
+              <div class="lbl">{{ block.settings.label | escape }}</div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    <div class="reviews-grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'review' -%}
+          <article class="review" {{ block.shopify_attributes }}>
+            <span class="stars">★★★★★</span>
+            <h4>{{ block.settings.title | escape }}</h4>
+            <p>"{{ block.settings.body }}"</p>
+            <div class="who">
+              <div class="avatar"></div>
+              <div class="who-info">
+                <div class="name">{{ block.settings.name | escape }}</div>
+                <div class="meta">{{ block.settings.meta | escape }}</div>
+              </div>
+            </div>
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · Reviews",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "anchor",  "label": "Anchor ID", "default": "reviews" },
+    { "type": "text",     "id": "eyebrow", "label": "Eyebrow", "default": "Real customers. Real results." },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>15,000+ customers. <em>4.8 stars on average</em>.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "4.8" },
+        { "type": "text", "id": "label",  "label": "Label",  "default": "Average rating" }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "text",     "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "body",  "label": "Body" },
+        { "type": "text",     "id": "name",  "label": "Name" },
+        { "type": "text",     "id": "meta",  "label": "Meta", "default": "Verified customer" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "stat", "settings": { "number": "4.8",  "label": "Average rating" } },
+      { "type": "stat", "settings": { "number": "15k+", "label": "Happy customers" } },
+      { "type": "stat", "settings": { "number": "IPX7", "label": "Fully waterproof" } },
+      { "type": "review", "settings": { "title": "Comfortable and discreet",        "body": "I love how comfortable and discreet this feels — it fits naturally and makes my routine much easier to stick with.",                       "name": "Kathy",  "meta": "Verified customer" } },
+      { "type": "review", "settings": { "title": "Premium feel, body-safe silicone","body": "The design feels premium and the silicone is soft and body-safe. I really like the variety of intensity settings.",                            "name": "Amara",  "meta": "Verified customer" } },
+      { "type": "review", "settings": { "title": "Does exactly what it says",        "body": "This product does exactly what it says. It's comfortable enough for regular use and effective enough to notice right away.",                  "name": "Jenny",  "meta": "Verified customer" } },
+      { "type": "review", "settings": { "title": "Beginner-friendly settings",       "body": "I was nervous to try a pelvic floor trainer, but the adjustable settings made it really easy to start gentle and build up.",                  "name": "Lydia",  "meta": "Verified customer" } },
+      { "type": "review", "settings": { "title": "Postpartum game-changer",          "body": "After my second baby I felt so disconnected from my body. The 4-zone activation has helped me reconnect and rebuild strength.",              "name": "Robin",  "meta": "Verified customer" } },
+      { "type": "review", "settings": { "title": "Quiet enough for shared spaces",   "body": "I share a small apartment and was worried about noise. This thing is genuinely whisper-quiet on every setting.",                             "name": "Priya",  "meta": "Verified customer" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · Reviews" }]
+}
+{% endschema %}

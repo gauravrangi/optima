@@ -1,0 +1,66 @@
+<section class="product" style="padding-top:80px">
+  <div class="container">
+    <div class="product-grid">
+      <div class="gallery" data-gallery>
+        <div class="gallery-main" data-gallery-main>
+          <img class="zoom-target" data-gallery-img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" />
+        </div>
+        {%- if product.images.size > 1 -%}
+          <div class="gallery-thumbs" data-gallery-thumbs>
+            {%- for img in product.images limit: 4 -%}
+              <div class="thumb{% if forloop.first %} active{% endif %}" data-src="{{ img | image_url: width: 1200 }}">
+                <img src="{{ img | image_url: width: 200 }}" alt="Thumbnail {{ forloop.index }}" />
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="product-info" data-product-block>
+        {%- assign current = product.selected_or_first_available_variant -%}
+        <h2>{{ product.title }}</h2>
+        <div class="price-row">
+          <span class="price" data-price>{{ current.price | money }}</span>
+          {%- if current.compare_at_price > current.price -%}
+            <span class="price-was" data-was>{{ current.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+        <div class="product-blurb">{{ product.description }}</div>
+
+        {%- if product.variants.size > 1 -%}
+          <div class="variant-group">
+            <div class="variant-label">
+              <span class="label">Select version</span>
+              <span class="selected" data-variant-selected>{{ current.title }}</span>
+            </div>
+            <div class="variants" data-variants>
+              {%- for v in product.variants -%}
+                <button type="button"
+                        class="variant{% if v.id == current.id %} selected{% endif %}"
+                        data-variant-id="{{ v.id }}"
+                        data-name="{{ v.title | escape }}"
+                        data-price-cents="{{ v.price }}">
+                  <div class="v-name">{{ v.title }}</div>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <input type="hidden" data-variant-only value="{{ current.id }}">
+          <script>document.addEventListener('DOMContentLoaded',function(){var b=document.querySelector('[data-product-block]');if(b){b.setAttribute('data-default-variant','{{ current.id }}');}});</script>
+        {%- endif -%}
+
+        <div class="qty-row">
+          <div class="qty">
+            <button type="button" data-qty-minus aria-label="Decrease">−</button>
+            <span data-qty-value>1</span>
+            <button type="button" data-qty-plus aria-label="Increase">+</button>
+          </div>
+          <button type="button" class="atc-btn" data-atc>
+            <span>Add to cart</span>
+            <span class="price" data-atc-total></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

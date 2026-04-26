@@ -1,0 +1,35 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Velura Bloom",
+    "theme_author": "Velura Wellness",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://www.velurawellness.com",
+    "theme_support_url": "https://www.velurawellness.com/pages/contact"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "color_bg",         "label": "Background",        "default": "#ffffff" },
+      { "type": "color", "id": "color_bg_warm",    "label": "Background (warm)", "default": "#fbeae6" },
+      { "type": "color", "id": "color_bg_cream",   "label": "Background (cream)","default": "#fdf5f3" },
+      { "type": "color", "id": "color_ink",        "label": "Ink",               "default": "#2a0a14" },
+      { "type": "color", "id": "color_ink_soft",   "label": "Ink (soft)",        "default": "#5c2530" },
+      { "type": "color", "id": "color_accent",     "label": "Accent",            "default": "#cc7183" },
+      { "type": "color", "id": "color_accent_deep","label": "Accent (deep)",     "default": "#940b28" },
+      { "type": "color", "id": "color_accent_soft","label": "Accent (soft)",     "default": "#f8dfdb" }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      { "type": "number", "id": "free_ship_threshold_cents", "label": "Free shipping threshold (cents)", "default": 10000, "info": "Used by the cart drawer progress bar." }
+    ]
+  }
+]

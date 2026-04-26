@@ -1,0 +1,34 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search the store",
+      "no_results_html": "No results found for \"{{ terms }}\"."
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for doesn't exist."
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty.",
+      "continue_browsing_html": "Continue browsing <a href=\"{{ url }}\">here</a>.",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "remove": "Remove"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable"
+    }
+  },
+  "customer": {
+    "login_page": { "title": "Log in", "email": "Email", "password": "Password", "sign_in": "Sign in", "forgot_password": "Forgot password?", "create_account": "Create account" },
+    "register": { "title": "Create account", "first_name": "First name", "last_name": "Last name", "email": "Email", "password": "Password", "submit": "Create account" },
+    "account": { "title": "Account", "details": "Account details", "view_addresses": "View addresses", "logout": "Log out", "orders": "Orders" }
+  }
+}

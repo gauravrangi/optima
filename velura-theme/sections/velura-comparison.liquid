@@ -1,0 +1,80 @@
+<section class="compare">
+  <div class="container-narrow">
+    <div class="compare-head">
+      <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="compare-table">
+      <div class="compare-row head">
+        <div>{{ section.settings.col_feature | escape }}</div>
+        <div class="velura-col">{{ section.settings.col_us | escape }}</div>
+        <div>{{ section.settings.col_them | escape }}</div>
+      </div>
+      {%- for block in section.blocks -%}
+        <div class="compare-row" {{ block.shopify_attributes }}>
+          <div>{{ block.settings.feature | escape }}</div>
+          <div class="velura-col">
+            <div class="compare-cell">
+              {%- case block.settings.us -%}
+                {%- when 'check' -%}<svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {%- when 'cross' -%}<svg class="cross" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                {%- else -%}<span class="partial">Some</span>
+              {%- endcase -%}
+            </div>
+          </div>
+          <div>
+            <div class="compare-cell">
+              {%- case block.settings.them -%}
+                {%- when 'check' -%}<svg class="check" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                {%- when 'cross' -%}<svg class="cross" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                {%- else -%}<span class="partial">Some</span>
+              {%- endcase -%}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · Comparison",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",     "label": "Eyebrow", "default": "Why Velura is different" },
+    { "type": "richtext", "id": "heading",     "label": "Heading", "default": "<p>Why Velura succeeds where <em>expensive trainers missed the mark</em>.</p>" },
+    { "type": "text",     "id": "col_feature", "label": "Column 1 label", "default": "Feature" },
+    { "type": "text",     "id": "col_us",      "label": "Column 2 label", "default": "Velura Bloom" },
+    { "type": "text",     "id": "col_them",    "label": "Column 3 label", "default": "Others" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text",   "id": "feature", "label": "Feature" },
+        { "type": "select", "id": "us",      "label": "Us",     "default": "check", "options": [
+          { "value": "check", "label": "Check" }, { "value": "cross", "label": "Cross" }, { "value": "partial", "label": "Partial" }
+        ] },
+        { "type": "select", "id": "them",    "label": "Others", "default": "cross", "options": [
+          { "value": "check", "label": "Check" }, { "value": "cross", "label": "Cross" }, { "value": "partial", "label": "Partial" }
+        ] }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "row", "settings": { "feature": "Deep-target activation for real pelvic floor engagement", "us": "check", "them": "cross" } },
+      { "type": "row", "settings": { "feature": "4 independent motor zones (not 1 motor spread thin)",     "us": "check", "them": "cross" } },
+      { "type": "row", "settings": { "feature": "Actually quiet during use",                                "us": "check", "them": "partial" } },
+      { "type": "row", "settings": { "feature": "Body-conforming, ergonomic fit",                           "us": "check", "them": "cross" } },
+      { "type": "row", "settings": { "feature": "Won't die mid-use — long battery life",                    "us": "check", "them": "cross" } },
+      { "type": "row", "settings": { "feature": "Reliable charging system",                                 "us": "check", "them": "partial" } },
+      { "type": "row", "settings": { "feature": "Feels natural, not clinical",                              "us": "check", "them": "cross" } },
+      { "type": "row", "settings": { "feature": "Medical-grade silicone, body-safe",                        "us": "check", "them": "partial" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · Comparison" }]
+}
+{% endschema %}

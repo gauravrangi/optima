@@ -1,0 +1,96 @@
+{%- liquid
+  assign hero_image = section.settings.image
+  assign image_url = ''
+  if hero_image != blank
+    assign image_url = hero_image | image_url: width: 1400
+  endif
+-%}
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        <h1>{{ section.settings.heading }}</h1>
+        <p class="hero-sub">{{ section.settings.subheading }}</p>
+        <div class="hero-cta">
+          {%- if section.settings.cta_primary_text != blank -%}
+            <a href="{{ section.settings.cta_primary_url }}"{% if section.settings.cta_primary_url contains '://' %} target="_blank" rel="noopener"{% endif %} class="btn btn-primary">{{ section.settings.cta_primary_text | escape }}</a>
+          {%- endif -%}
+          {%- if section.settings.cta_secondary_text != blank -%}
+            <a href="{{ section.settings.cta_secondary_url }}" class="btn btn-outline">{{ section.settings.cta_secondary_text | escape }}</a>
+          {%- endif -%}
+        </div>
+        <div class="hero-meta">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'meta' -%}
+              <div class="hero-meta-item" {{ block.shopify_attributes }}>
+                {% render 'icon', icon: block.settings.icon, size: 18 %}
+                <span>{{ block.settings.text | escape }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+      <div class="hero-media"{% if image_url != blank %} style="background-image:url('{{ image_url }}')"{% endif %}>
+        {%- if section.settings.quote_text != blank -%}
+          <div class="hero-floating-quote">
+            <p>"{{ section.settings.quote_text }}"</p>
+            {%- if section.settings.quote_source != blank -%}
+              <span class="src">{{ section.settings.quote_source | escape }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.badge_text != blank -%}
+          <div class="hero-badge">
+            <div class="stars">★★★★★</div>
+            <p>{{ section.settings.badge_text | escape }}</p>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",        "label": "Eyebrow", "default": "Velura Bloom · Pelvic Wellness, Reimagined" },
+    { "type": "richtext", "id": "heading",        "label": "Heading", "default": "<p>Stronger.<br>More <em>Confident</em>.<br>Yours Again.</p>" },
+    { "type": "richtext", "id": "subheading",     "label": "Subheading", "default": "<p>The Velura 4-in-1 Pelvic Floor Activator combines four-zone biomechanical stimulation with a discreet, body-safe design — so you can train deep muscles, support bladder control, and feel like yourself again.</p>" },
+    { "type": "text",     "id": "cta_primary_text",   "label": "Primary CTA text",   "default": "Shop Now · $53.95" },
+    { "type": "url",      "id": "cta_primary_url",    "label": "Primary CTA URL" },
+    { "type": "text",     "id": "cta_secondary_text", "label": "Secondary CTA text", "default": "How it works" },
+    { "type": "url",      "id": "cta_secondary_url",  "label": "Secondary CTA URL" },
+    { "type": "image_picker", "id": "image",          "label": "Hero image" },
+    { "type": "text",     "id": "quote_text",     "label": "Floating quote", "default": "Comfortable, discreet, and the targeted stimulation actually works. My routine is finally something I look forward to." },
+    { "type": "text",     "id": "quote_source",   "label": "Quote source",   "default": "— Kathy, verified customer" },
+    { "type": "text",     "id": "badge_text",     "label": "Rating badge text", "default": "Loved 4.8 by 15,000+ customers" }
+  ],
+  "blocks": [
+    {
+      "type": "meta",
+      "name": "Meta item",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "leaf", "options": [
+          { "value": "leaf",    "label": "Leaf" },
+          { "value": "package", "label": "Package" },
+          { "value": "shield",  "label": "Shield" },
+          { "value": "truck",   "label": "Truck" }
+        ] },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "meta", "settings": { "icon": "leaf",    "text": "Medical-grade silicone" } },
+      { "type": "meta", "settings": { "icon": "package", "text": "Discreet packaging" } },
+      { "type": "meta", "settings": { "icon": "shield",  "text": "Lifetime guarantee" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "hero":         { "type": "velura-hero",          "settings": {} },
+    "ticker":       { "type": "velura-ticker",        "settings": {} },
+    "multi-zone":   { "type": "velura-multi-zone",    "settings": {} },
+    "how-it-works": { "type": "velura-how-it-works",  "settings": {} },
+    "product":      { "type": "velura-product-block", "settings": {} },
+    "comparison":   { "type": "velura-comparison",    "settings": {} },
+    "reviews":      { "type": "velura-reviews",       "settings": {} },
+    "guarantee":    { "type": "velura-guarantee",     "settings": {} },
+    "faq":          { "type": "velura-faq",           "settings": {} }
+  },
+  "order": [
+    "hero",
+    "ticker",
+    "multi-zone",
+    "how-it-works",
+    "product",
+    "comparison",
+    "reviews",
+    "guarantee",
+    "faq"
+  ]
+}

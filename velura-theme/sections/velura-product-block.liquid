@@ -1,0 +1,223 @@
+{%- liquid
+  assign product = all_products[section.settings.product]
+  assign has_product = false
+  if product != blank and product.id != null
+    assign has_product = true
+  endif
+  assign default_variant = product.selected_or_first_available_variant
+-%}
+
+<section class="product" id="{{ section.settings.anchor | default: 'product' }}">
+  <div class="container">
+    <div class="product-grid">
+      <div class="gallery" data-gallery>
+        {%- if product.images.size > 0 -%}
+          <div class="gallery-main" data-gallery-main>
+            <img class="zoom-target" data-gallery-img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}" />
+          </div>
+          <div class="gallery-thumbs" data-gallery-thumbs>
+            {%- for img in product.images limit: 4 -%}
+              <div class="thumb{% if forloop.first %} active{% endif %}" data-src="{{ img | image_url: width: 1200 }}">
+                <img src="{{ img | image_url: width: 200 }}" alt="Thumbnail {{ forloop.index }}" />
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="gallery-main" data-gallery-main>
+            <img class="zoom-target" data-gallery-img src="{{ 'pdp-1.png' | asset_url }}" alt="Product image" />
+          </div>
+          <div class="gallery-thumbs" data-gallery-thumbs>
+            <div class="thumb active" data-src="{{ 'pdp-1.png' | asset_url }}"><img src="{{ 'pdp-1.png' | asset_url }}" alt="Thumb 1" /></div>
+            <div class="thumb"        data-src="{{ 'pdp-2.jpg' | asset_url }}"><img src="{{ 'pdp-2.jpg' | asset_url }}" alt="Thumb 2" /></div>
+            <div class="thumb"        data-src="{{ 'pdp-3.jpg' | asset_url }}"><img src="{{ 'pdp-3.jpg' | asset_url }}" alt="Thumb 3" /></div>
+            <div class="thumb"        data-src="{{ 'pdp-4.jpg' | asset_url }}"><img src="{{ 'pdp-4.jpg' | asset_url }}" alt="Thumb 4" /></div>
+          </div>
+        {%- endif -%}
+      </div>
+
+      <div class="product-info" data-product-block>
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        {%- endif -%}
+        <h2>{{ section.settings.heading }}</h2>
+        {%- if section.settings.rating_text != blank -%}
+          <div class="product-rating">
+            <span class="stars">★★★★★</span>
+            <span>{{ section.settings.rating_text | escape }}</span>
+          </div>
+        {%- endif -%}
+
+        <div class="price-row">
+          <span class="price" data-price>{{ default_variant.price | default: 5395 | money }}</span>
+          <span class="price-was" data-was>{{ default_variant.compare_at_price | default: 16185 | money }}</span>
+          {%- if section.settings.save_label != blank -%}
+            <span class="price-save">{{ section.settings.save_label | escape }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.bullets != blank -%}
+          <p class="product-blurb">{{ section.settings.bullets }}</p>
+        {%- endif -%}
+
+        {%- comment -%} VARIANT PICKER {%- endcomment -%}
+        {%- if has_product and product.variants.size > 1 -%}
+          <div class="variant-group">
+            <div class="variant-label">
+              <span class="label">Select version</span>
+              <span class="selected" data-variant-selected>{{ default_variant.title }}</span>
+            </div>
+            <div class="variants" data-variants>
+              {%- for v in product.variants -%}
+                <button type="button"
+                        class="variant{% if v.id == default_variant.id %} selected{% endif %}"
+                        data-variant-id="{{ v.id }}"
+                        data-name="{{ v.title | escape }}"
+                        data-price-cents="{{ v.price }}">
+                  {%- if v.metafields.custom.tag != blank -%}
+                    <span class="v-tag">{{ v.metafields.custom.tag }}</span>
+                  {%- endif -%}
+                  <div class="v-name">{{ v.title }}</div>
+                  <div class="v-desc">{{ v.metafields.custom.subtitle | default: v.title }}</div>
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- elsif has_product == false -%}
+          {%- comment -%} Preview placeholder when no product is assigned {%- endcomment -%}
+          <div class="variant-group">
+            <div class="variant-label">
+              <span class="label">Select version</span>
+              <span class="selected" data-variant-selected>Pro · Integrated Lubrication</span>
+            </div>
+            <div class="variants" data-variants>
+              <button type="button" class="variant"          data-variant-id="0" data-name="Essential 4-in-1"          data-price-cents="5395">
+                <div class="v-name">Essential 4-in-1</div>
+                <div class="v-desc">The original activator</div>
+              </button>
+              <button type="button" class="variant selected" data-variant-id="0" data-name="Pro · Integrated Lubrication" data-price-cents="5395">
+                <span class="v-tag">Best Seller</span>
+                <div class="v-name">Pro · Integrated Lubrication</div>
+                <div class="v-desc">Built-in lubrication system</div>
+              </button>
+              <button type="button" class="variant"          data-variant-id="0" data-name="Libido Reset"               data-price-cents="5395">
+                <div class="v-name">Libido Reset</div>
+                <div class="v-desc">60 capsules supplement</div>
+              </button>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} BUNDLE PICKER {%- endcomment -%}
+        {%- if section.blocks.size > 0 -%}
+          <div class="variant-group">
+            <div class="variant-label">
+              <span class="label">Bundle &amp; Save</span>
+            </div>
+            <div class="bundle-options" data-bundles>
+              {%- for block in section.blocks -%}
+                {%- if block.type == 'bundle' -%}
+                  <button type="button"
+                          class="bundle{% if block.settings.is_default %} selected{% endif %}"
+                          data-bundle-qty="{{ block.settings.qty }}"
+                          data-was-cents="{{ block.settings.was_cents }}"
+                          {{ block.shopify_attributes }}>
+                    {%- if block.settings.ribbon != blank -%}
+                      <span class="ribbon">{{ block.settings.ribbon | escape }}</span>
+                    {%- endif -%}
+                    <div class="radio"></div>
+                    <div class="bundle-info">
+                      <div class="b-name">{{ block.settings.name | escape }}</div>
+                      <div class="b-meta">{{ block.settings.meta | escape }}</div>
+                    </div>
+                    <div class="bundle-price">
+                      <div class="now"></div>
+                      <div class="was"></div>
+                    </div>
+                  </button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="qty-row">
+          <div class="qty">
+            <button type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+            <span data-qty-value>1</span>
+            <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+          </div>
+          <button type="button" class="atc-btn" data-atc>
+            <span>Add to cart</span>
+            <span class="price" data-atc-total></span>
+          </button>
+        </div>
+
+        <div class="product-perks">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'perk' -%}
+              <div class="perk" {{ block.shopify_attributes }}>
+                {% render 'icon', icon: block.settings.icon, size: 20 %}
+                <span>{{ block.settings.text | escape }}</span>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · Product block",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "anchor",      "label": "Anchor ID", "default": "product" },
+    { "type": "product",  "id": "product",     "label": "Product (variants/price/images come from here)" },
+    { "type": "text",     "id": "eyebrow",     "label": "Eyebrow", "default": "HOT PRODUCT · LOW STOCK" },
+    { "type": "richtext", "id": "heading",     "label": "Heading", "default": "<p>Velura 4-in-1 <em>Pelvic Floor Activator</em></p>" },
+    { "type": "text",     "id": "rating_text", "label": "Rating text", "default": "4.8 · Loved by 15,000+ customers" },
+    { "type": "text",     "id": "save_label",  "label": "Save label", "default": "Save 66%" },
+    { "type": "richtext", "id": "bullets",     "label": "Bullets", "default": "<p>✓ Discreet, body-safe design fits comfortably for everyday pelvic floor training.<br>✓ Four-zone stimulation helps activate deep muscles with targeted, therapeutic support.<br>✓ Lightweight, secure shape moves naturally with your body for comfortable use.<br>✓ Multiple intensity and pattern settings to match your routine.<br>✓ Fully waterproof design for easy cleaning and hygienic, worry-free use.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "bundle",
+      "name": "Bundle option",
+      "settings": [
+        { "type": "text",    "id": "name",       "label": "Name",       "default": "Buy 1" },
+        { "type": "text",    "id": "meta",       "label": "Meta",       "default": "One device · Save 66%" },
+        { "type": "text",    "id": "ribbon",     "label": "Ribbon (optional)" },
+        { "type": "number",  "id": "qty",        "label": "Quantity",   "default": 1 },
+        { "type": "number",  "id": "was_cents",  "label": "Compare-at price (cents)", "default": 16185 },
+        { "type": "checkbox","id": "is_default", "label": "Selected by default" }
+      ]
+    },
+    {
+      "type": "perk",
+      "name": "Perk",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "truck", "options": [
+          { "value": "truck",   "label": "Truck" },
+          { "value": "shield",  "label": "Shield" },
+          { "value": "package", "label": "Package" },
+          { "value": "leaf",    "label": "Leaf" }
+        ] },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free shipping" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "bundle", "settings": { "name": "Buy 1", "meta": "One device · Save 66%",          "qty": 1, "was_cents": 16185 } },
+      { "type": "bundle", "settings": { "name": "Buy 2", "meta": "Save $215.80 — pair & share",     "qty": 2, "was_cents": 32370, "ribbon": "Most Popular", "is_default": true } },
+      { "type": "bundle", "settings": { "name": "Buy 3", "meta": "Save $323.70",                   "qty": 3, "was_cents": 48555 } },
+      { "type": "bundle", "settings": { "name": "Buy 4", "meta": "Save $431.60 — best value",       "qty": 4, "was_cents": 64740, "ribbon": "Best Value" } },
+      { "type": "perk",   "settings": { "icon": "truck",   "text": "Free shipping" } },
+      { "type": "perk",   "settings": { "icon": "shield",  "text": "Lifetime guarantee" } },
+      { "type": "perk",   "settings": { "icon": "package", "text": "Discreet box" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · Product block" }]
+}
+{% endschema %}

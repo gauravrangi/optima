@@ -1,0 +1,27 @@
+<section class="science">
+  <div class="container">
+    <div class="science-head">
+      <span class="eyebrow">{{ collection.title | escape }}</span>
+      <h2>{{ collection.title }}</h2>
+      {%- if collection.description != blank -%}<p>{{ collection.description }}</p>{%- endif -%}
+    </div>
+    {%- if collection.products.size > 0 -%}
+      <div class="reviews-grid">
+        {%- for p in collection.products -%}
+          <a class="review" href="{{ p.url }}" style="display:block;text-decoration:none">
+            {%- if p.featured_image -%}
+              <img src="{{ p.featured_image | image_url: width: 800 }}" alt="{{ p.title | escape }}" style="border-radius:4px;margin-bottom:16px" />
+            {%- endif -%}
+            <h4>{{ p.title }}</h4>
+            <p>{{ p.price | money }}{% if p.compare_at_price > p.price %} <span class="price-was" style="margin-left:8px">{{ p.compare_at_price | money }}</span>{% endif %}</p>
+          </a>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}
+        <div style="margin-top:48px;text-align:center">{{ paginate | default_pagination }}</div>
+      {%- endif -%}
+    {%- else -%}
+      <p style="text-align:center;color:var(--ink-soft)">No products available.</p>
+    {%- endif -%}
+  </div>
+</section>
