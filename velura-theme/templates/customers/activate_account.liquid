@@ -1,0 +1,14 @@
+<section class="science">
+  <div class="container-narrow" style="max-width:480px">
+    <div class="science-head">
+      <h2>Activate account</h2>
+      <p>Set a password to activate your account.</p>
+    </div>
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}<div style="color:var(--accent-deep);margin-bottom:16px">{{ form.errors | default_errors }}</div>{%- endif -%}
+      <input type="password" name="customer[password]" placeholder="Password" required style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;margin-bottom:12px" />
+      <input type="password" name="customer[password_confirmation]" placeholder="Confirm password" required style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;margin-bottom:24px" />
+      <button type="submit" class="btn btn-primary" style="width:100%">Activate</button>
+    {%- endform -%}
+  </div>
+</section>

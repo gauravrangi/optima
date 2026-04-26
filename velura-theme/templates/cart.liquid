@@ -1,0 +1,37 @@
+<section class="product" style="padding:80px 0">
+  <div class="container-narrow">
+    <h2 style="margin-bottom:32px">Your cart</h2>
+    {%- if cart.item_count == 0 -%}
+      <p style="color:var(--ink-soft)">Your cart is empty. <a href="{{ routes.all_products_collection_url }}" style="text-decoration:underline">Continue shopping</a>.</p>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" novalidate>
+        {%- for item in cart.items -%}
+          <div class="cart-item" style="grid-template-columns:80px 1fr auto">
+            <div class="cart-item-img"{% if item.image %} style="background:#fdf5f3 url({{ item.image | image_url: width: 200 }}) center/cover no-repeat"{% endif %}></div>
+            <div class="cart-item-info">
+              <div class="name">{{ item.product.title }}</div>
+              {%- if item.variant.title != 'Default Title' -%}<div class="v">{{ item.variant.title }}</div>{%- endif -%}
+              <div class="qty">
+                <a href="{{ item.url_to_remove }}" aria-label="Remove">−</a>
+                <span>{{ item.quantity }}</span>
+                <a href="{{ routes.cart_change_url }}?line={{ forloop.index }}&amp;quantity={{ item.quantity | plus: 1 }}" aria-label="Increase">+</a>
+              </div>
+            </div>
+            <div class="cart-item-price">
+              <div class="p">{{ item.line_price | money }}</div>
+              <a class="rm" href="{{ item.url_to_remove }}">Remove</a>
+            </div>
+          </div>
+        {%- endfor -%}
+        <div class="cart-total" style="margin-top:32px">
+          <span class="lbl">Subtotal</span>
+          <span class="v">{{ cart.total_price | money }}</span>
+        </div>
+        <button type="submit" name="checkout" class="atc-btn" style="margin-top:24px">
+          <span>Checkout</span>
+          <span class="price">{{ cart.total_price | money }}</span>
+        </button>
+      </form>
+    {%- endif -%}
+  </div>
+</section>

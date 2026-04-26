@@ -1,0 +1,57 @@
+<section class="faq" id="{{ section.settings.anchor | default: 'faq' }}">
+  <div class="container-narrow">
+    <div class="faq-head">
+      <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="faq-list">
+      {%- for block in section.blocks -%}
+        <div class="faq-item{% if forloop.first %} open{% endif %}" {{ block.shopify_attributes }}>
+          <button class="faq-q" type="button" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}">
+            <span>{{ block.settings.question | escape }}</span>
+            <span class="plus" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a"><p>{{ block.settings.answer }}</p></div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · FAQ",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "anchor",  "label": "Anchor ID", "default": "faq" },
+    { "type": "text",     "id": "eyebrow", "label": "Eyebrow", "default": "Common questions about this product" },
+    { "type": "richtext", "id": "heading", "label": "Heading", "default": "<p>Frequently <em>asked questions</em>.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text",     "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer",   "label": "Answer" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "faq", "settings": { "question": "Is lubrication recommended?",                       "answer": "<p>Yes, a water-based lubricant can improve comfort and help the device glide smoothly.</p>" } },
+      { "type": "faq", "settings": { "question": "Is it suitable for beginners?",                     "answer": "<p>Yes, the adjustable settings make it beginner-friendly and easy to start at a gentle level.</p>" } },
+      { "type": "faq", "settings": { "question": "Is the size comfortable for beginners?",            "answer": "<p>Yes, the smooth, ergonomic shape is designed for comfort and easy positioning.</p>" } },
+      { "type": "faq", "settings": { "question": "Can couples use this together?",                    "answer": "<p>Yes, it can be used privately during shared wellness routines or relaxation time with a partner.</p>" } },
+      { "type": "faq", "settings": { "question": "Can I control suction and vibration separately?",   "answer": "<p>The stimulation modes can be adjusted independently for a more personalized experience.</p>" } },
+      { "type": "faq", "settings": { "question": "Is the material body-safe?",                        "answer": "<p>Yes, it's made from medical-grade silicone designed for comfortable pelvic floor use.</p>" } },
+      { "type": "faq", "settings": { "question": "Is it quiet during use?",                           "answer": "<p>Yes, the motor is designed to stay low-noise for private and discreet use.</p>" } },
+      { "type": "faq", "settings": { "question": "What types of stimulation does it provide?",        "answer": "<p>It provides multi-zone biomechanical stimulation designed to activate deep pelvic floor muscles.</p>" } },
+      { "type": "faq", "settings": { "question": "How do I clean it?",                                "answer": "<p>Wash with warm water and mild soap, then dry thoroughly before storing.</p>" } },
+      { "type": "faq", "settings": { "question": "How many modes are included?",                      "answer": "<p>It includes multiple intensity levels and four independent motor zones for tailored training.</p>" } },
+      { "type": "faq", "settings": { "question": "Is the device waterproof?",                         "answer": "<p>Yes, it is IPX7 waterproof and easy to clean after each use.</p>" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · FAQ" }]
+}
+{% endschema %}

@@ -1,0 +1,53 @@
+<section class="science" id="{{ section.settings.anchor | default: 'science' }}">
+  <div class="container">
+    <div class="science-head">
+      <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+      <h2>{{ section.settings.heading }}</h2>
+      <p>{{ section.settings.body }}</p>
+    </div>
+    <div class="steps">
+      {%- for block in section.blocks -%}
+        <div class="step" {{ block.shopify_attributes }}>
+          <div class="step-num">{{ block.settings.number | escape }}</div>
+          <div class="step-icon-art"{% if block.settings.image != blank %} style="background-image:url('{{ block.settings.image | image_url: width: 800 }}')"{% endif %}></div>
+          <h3>{{ block.settings.title | escape }}</h3>
+          <p>{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · How it works",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "anchor",   "label": "Anchor ID", "default": "science" },
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow", "default": "How Velura Works" },
+    { "type": "richtext", "id": "heading",  "label": "Heading", "default": "<p>Advanced pelvic floor support, in <em>one compact device</em>.</p>" },
+    { "type": "richtext", "id": "body",     "label": "Body", "default": "<p>Designed for effective pelvic health training, the Velura 4-in-1 Activator combines clinical-style stimulation with comfort.</p>" }
+  ],
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text",         "id": "number", "label": "Number",   "default": "01" },
+        { "type": "text",         "id": "title",  "label": "Title",    "default": "Activate four zones at once" },
+        { "type": "richtext",     "id": "body",   "label": "Body",     "default": "<p>Four independent motor zones deliver targeted biomechanical stimulation across the pelvic floor.</p>" },
+        { "type": "image_picker", "id": "image",  "label": "Image" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "step", "settings": { "number": "01", "title": "Activate four zones at once", "body": "<p>Four independent motor zones deliver targeted biomechanical stimulation across the pelvic floor — not a single weak motor spread thin. Each zone helps engage deep muscles for recovery, control, and core strength.</p>" } },
+      { "type": "step", "settings": { "number": "02", "title": "Train at your own pace", "body": "<p>Multiple intensity levels and pattern settings adapt to your comfort. Beginners can start gentle and build confidence; advanced users can dial in a more intense session. The ergonomic, body-safe shape makes positioning effortless.</p>" } },
+      { "type": "step", "settings": { "number": "03", "title": "Make it part of your life", "body": "<p>IPX7 waterproof, low-noise, and TSA &amp; EU airline approved. Wash with warm water and mild soap, dry, and store discreetly. A simple, private routine you can actually stick with.</p>" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · How it works" }]
+}
+{% endschema %}

@@ -1,0 +1,21 @@
+<section class="science">
+  <div class="container-narrow">
+    <div class="science-head">
+      <span class="eyebrow">{{ order.created_at | date: '%B %-d, %Y' }}</span>
+      <h2>Order {{ order.name }}</h2>
+    </div>
+    <div class="compare-table">
+      {%- for line in order.line_items -%}
+        <div class="compare-row" style="grid-template-columns:1fr auto auto">
+          <div>{{ line.title }}</div>
+          <div style="text-align:right">{{ line.quantity }}</div>
+          <div style="text-align:right">{{ line.line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+      <div class="compare-row" style="grid-template-columns:1fr auto"><div>Subtotal</div><div style="text-align:right">{{ order.subtotal_price | money }}</div></div>
+      <div class="compare-row" style="grid-template-columns:1fr auto"><div>Shipping</div><div style="text-align:right">{{ order.shipping_price | money }}</div></div>
+      <div class="compare-row" style="grid-template-columns:1fr auto"><div>Tax</div><div style="text-align:right">{{ order.tax_price | money }}</div></div>
+      <div class="compare-row" style="grid-template-columns:1fr auto"><div><strong>Total</strong></div><div style="text-align:right"><strong>{{ order.total_price | money }}</strong></div></div>
+    </div>
+  </div>
+</section>

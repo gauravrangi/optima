@@ -1,0 +1,35 @@
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="{{ section.settings.logo.width }}" height="{{ section.settings.logo.height }}" style="height:{{ section.settings.logo_height | default: 52 }}px;width:auto" />
+      {%- else -%}
+        {{ shop.name }}
+      {%- endif -%}
+    </a>
+    <div class="nav-links">
+      {%- for link in linklists[section.settings.menu].links -%}
+        <a href="{{ link.url }}"{% if link.url contains '://' %} target="_blank" rel="noopener"{% endif %}>{{ link.title }}</a>
+      {%- endfor -%}
+    </div>
+    <div class="nav-actions">
+      <a href="{{ routes.search_url }}" class="icon-btn" aria-label="Search">{% render 'icon', icon: 'search' %}</a>
+      <a href="{{ routes.account_url }}" class="icon-btn" aria-label="Account">{% render 'icon', icon: 'account' %}</a>
+      <span class="icon-btn-wrap">
+        <button type="button" class="icon-btn" data-cart-trigger aria-label="Cart">{% render 'icon', icon: 'cart' %}</button>
+        <span class="cart-count" data-cart-count style="display:none">{{ cart.item_count }}</span>
+      </span>
+    </div>
+  </div>
+</nav>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo image" },
+    { "type": "range", "id": "logo_height", "label": "Logo height (px)", "min": 24, "max": 96, "step": 2, "default": 52 },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }
+  ]
+}
+{% endschema %}

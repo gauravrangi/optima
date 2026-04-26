@@ -1,0 +1,26 @@
+{%- comment -%} Cart drawer rendered globally; populated by theme.js via /cart.js {%- endcomment -%}
+<div class="cart-overlay" id="cart-overlay"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-hidden="true">
+  <div class="cart-head">
+    <h3 class="serif">Your cart</h3>
+    <button class="cart-close" id="cart-close" type="button" aria-label="Close cart">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-body" id="cart-body"></div>
+  <div class="cart-foot" id="cart-foot" style="display:none">
+    <div class="cart-progress" id="cart-progress">
+      <span id="cart-progress-text"></span>
+      <div class="cart-progress-bar"><div id="cart-progress-fill" style="width:0%"></div></div>
+    </div>
+    <div class="cart-total">
+      <span class="lbl">Subtotal</span>
+      <span class="v" id="cart-total">$0.00</span>
+    </div>
+    <a href="{{ routes.cart_url }}/checkout" class="atc-btn" style="text-decoration:none">
+      <span>Checkout</span>
+      <span class="price" id="cart-checkout-price">$0.00</span>
+    </a>
+    <p class="cart-note">Lifetime guarantee · Discreet packaging · Free shipping over {{ settings.free_ship_threshold_cents | default: 10000 | money }}</p>
+  </div>
+</aside>

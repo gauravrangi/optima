@@ -1,0 +1,57 @@
+<section class="root-cause">
+  <div class="container">
+    <div class="root-cause-grid">
+      <div class="root-cause-image">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'image' and block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.alt | escape }}" {{ block.shopify_attributes }} />
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <div>
+        <span class="eyebrow">{{ section.settings.eyebrow | escape }}</span>
+        <h2>{{ section.settings.heading }}</h2>
+        <p class="lead">{{ section.settings.body }}</p>
+        {%- if section.settings.cta_text != blank -%}
+          <div class="root-cause-cta">
+            <a href="{{ section.settings.cta_url }}" class="btn btn-outline">{{ section.settings.cta_text | escape }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Velura · Multi-zone",
+  "tag": "section",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",  "label": "Eyebrow", "default": "Multi-Zone Activation Technology" },
+    { "type": "richtext", "id": "heading",  "label": "Heading", "default": "<p>One weak motor can't do the work of <em>four targeted zones</em>.</p>" },
+    { "type": "richtext", "id": "body",     "label": "Body",    "default": "<p>Most pelvic floor trainers spread a single motor's energy thin across the whole device. Velura uses four independent motor zones to deliver targeted biomechanical stimulation — supporting deeper muscle engagement for recovery, control, and core strength.</p>" },
+    { "type": "text",     "id": "cta_text", "label": "CTA text", "default": "See how it works" },
+    { "type": "url",      "id": "cta_url",  "label": "CTA URL" }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text",         "id": "alt",   "label": "Alt text" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "image", "settings": { "alt": "Velura device" } },
+      { "type": "image", "settings": { "alt": "Multi-zone activation" } },
+      { "type": "image", "settings": { "alt": "Mode 3" } },
+      { "type": "image", "settings": { "alt": "Mode 4" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · Multi-zone" }]
+}
+{% endschema %}

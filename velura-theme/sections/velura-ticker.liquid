@@ -1,0 +1,36 @@
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner" data-loop="true">
+    {%- for block in section.blocks -%}
+      <span class="ticker-item"><span class="dot"></span>{{ block.settings.text | escape }}</span>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Velura · Ticker",
+  "tag": "section",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "IPX7 WATERPROOF" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "item", "settings": { "text": "IPX7 WATERPROOF" } },
+      { "type": "item", "settings": { "text": "MEDICAL-GRADE SILICONE" } },
+      { "type": "item", "settings": { "text": "4-ZONE ACTIVATION" } },
+      { "type": "item", "settings": { "text": "15,000+ HAPPY CUSTOMERS" } },
+      { "type": "item", "settings": { "text": "TSA & EU AIRLINE APPROVED" } },
+      { "type": "item", "settings": { "text": "LIFETIME GUARANTEE" } },
+      { "type": "item", "settings": { "text": "BLOOM15 · 15% OFF YOUR FIRST ORDER" } }
+    ]
+  },
+  "presets": [{ "name": "Velura · Ticker" }]
+}
+{% endschema %}

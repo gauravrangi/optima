@@ -1,0 +1,21 @@
+<section class="science">
+  <div class="container-narrow">
+    <div class="science-head">
+      <h2>Search</h2>
+      <form action="{{ routes.search_url }}" method="get" role="search" style="margin-top:24px">
+        <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search the store" style="width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:16px" />
+      </form>
+    </div>
+    {%- if search.performed -%}
+      <p style="margin-bottom:24px;color:var(--ink-soft)">{{ search.results_count }} result{% if search.results_count != 1 %}s{% endif %}.</p>
+      <div class="reviews-grid">
+        {%- for r in search.results -%}
+          <a class="review" href="{{ r.url }}" style="text-decoration:none">
+            <h4>{{ r.title }}</h4>
+            <p>{{ r.content | strip_html | truncatewords: 24 }}</p>
+          </a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
